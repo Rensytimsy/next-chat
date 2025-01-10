@@ -1,0 +1,44 @@
+Roboto
+Lora
+Poppins
+Playfair
+Montserrat
+Merriweather
+Nunito
+Raleway
+Quicksand
+Oswald
+Fira Sans
+Pacifico
+Abril Fatface
+
+Website colours
+
+ui elements colours
+
+blue - #3B82F6
+darkblue - #1D4ED8
+teal - #34D399
+
+background colours for chat interface
+
+lightgray - #F3F4F6
+darkgray - #1F2937
+white - #FFFFFF
+
+Text colours
+
+darkGray - #333333
+lightGray - #6B7280
+White  - #FFFFFF
+
+Accent/Action colour e.g for buttons
+
+AccentYellow - #F59E0B
+Green - #10B981
+Red - #EF4444
+
+buble colour for chat messages
+
+lightBlue - #93C5FD
+Purple - #8B5CF6
