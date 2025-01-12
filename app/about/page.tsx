@@ -1,10 +1,16 @@
+
+"use client"
 import { Lora } from "next/font/google";
 const lora = Lora({ subsets: ["latin"] });
+import { usePathname } from "next/navigation";
 
 export default function AboutPage() {
+
+  const path = usePathname();
+
   return (
     <div
-      className={`h-screen w-screen bg-contain bg-center min-h-screen ${lora.className}`}
+      className={`h-screen ${path === "/" ? "" : "mt-14"} w-screen bg-contain bg-center min-h-screen ${lora.className}`}
       style={{
         backgroundImage: 'url("/about back.svg")', // Path to your SVG
         backgroundSize: "cover", // Ensures the SVG covers the entire div

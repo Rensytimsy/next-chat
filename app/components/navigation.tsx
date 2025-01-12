@@ -14,10 +14,8 @@ export default function NavigationBar() {
       <ul className="flex flex-row gap-x-6 mt-2 text-white">
         <li className="hover:text-accentYellow"><Link href="/">Home</Link></li>
         <li className="hover:text-accentYellow"><Link href="/about">About</Link></li>
-        <li className="hover:text-accentYellow"><Link href="/about">Services</Link></li>
-        <li className="hover:text-accentYellow"><Link href="/about">Services</Link></li>
-        <li className="hover:text-accentYellow"><Link href="/about">Services</Link></li>
-        <li className="hover:text-accentYellow"><Link href="/about">Services</Link></li>
+        <li className="hover:text-accentYellow"><Link href="/login">Login</Link></li>
+        <li className="hover:text-accentYellow"><Link href="/signup">Sign up</Link></li>
       </ul>
       <div>
         <button className="bg-blueColor hover:bg-accentYellow hover:text-black p-2 text-white rounded-full">

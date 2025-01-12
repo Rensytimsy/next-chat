@@ -3,15 +3,18 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Lora } from "next/font/google";
+import { usePathname } from "next/navigation";
 
 const lora = Lora({subsets: ["latin"]});
 
 export default function SideNavigation() {
   const [openNav, setOpenNav] = useState(false);
+  const path = usePathname();
+  console.log(path);
 
   return (
-    <div className="bg-headerBlue w-screen">
-      <div className="p-4 lg:hidden md:block fixed top-0 flex flex-row justify-between w-screen bg-headerBlue">
+    <div className="bg-headerBlue w-screen z-50">
+      <div className="p-4 lg:hidden md:block fixed top-0 flex flex-row justify-between w-screen bg-headerBlue z-50">
         <div className={`${lora.className}`}>
             <p className="text-2xl font-semibold text-white">Chat space</p>
         </div>
@@ -39,12 +42,12 @@ export default function SideNavigation() {
 
       {openNav && (
         <div
-          className={`lg:hidden md:block fixed w-screen top-20 right-0 bg-black/70 h-screen transition-all duration-300 transform ${
+          className={`lg:hidden md:block fixed w-screen top-[64px] right-0 bg-black/70 h-screen transition-all duration-300 transform z-50 ${
             openNav ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           <div>
-            <div className="mt-4 flex justify-center">
+            <div className="mt-[180px] flex justify-center">
               <ul className="text-white text-center space-y-8">
                 <li>
                   <Link href="/">Home</Link>
@@ -53,7 +56,10 @@ export default function SideNavigation() {
                   <Link href="/about">About</Link>
                 </li>
                 <li>
-                  <Link href="/services">Services</Link>
+                  <Link href="/login">Login</Link>
+                </li>
+                <li>
+                  <Link href="/signup">Sign up</Link>
                 </li>
               </ul>
             </div>
