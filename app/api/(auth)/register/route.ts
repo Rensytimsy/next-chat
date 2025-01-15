@@ -38,13 +38,14 @@ export async function POST(request: Request) {
 }
 
 // The function below deletes user document using the id of the document  passed
-export async function DELET(request: Request) {
+export async function DELETE(request: Request) {
   try {
     await dbConnection();
     //below code is to help with the setting of the request params
-    const userId = new URL(request.url);
-    const foundUser = await userSchema.findById(userId);
-    return NextResponse.json({ user: foundUser }, { status: 200 });
+    const reqbody = await request.json();
+    const name = reqbody.username;
+    const foundUser = await userSchema.findOneAndDelete({username: name});
+    return NextResponse.json({ user: foundUser, message: "user successfully deleted" }, { status: 200 });
   } catch (error: any) {
     return new NextResponse(error.message, { status: 500 });
   }
