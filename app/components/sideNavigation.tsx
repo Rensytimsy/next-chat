@@ -16,7 +16,7 @@ export default function SideNavigation() {
     <div className="bg-headerBlue w-screen z-50">
       <div className="p-4 lg:hidden md:block fixed top-0 flex flex-row justify-between w-screen bg-headerBlue z-50">
         <div className={`${lora.className}`}>
-            <p className="text-2xl font-semibold text-white">Chat space</p>
+            <p className="text-2xl font-semibold text-white">DevSpace</p>
         </div>
         <div
           className="flex  flex-col space-y-1 cursor-pointer absolute top-8 right-4 transform -translate-y-1/2"
@@ -54,6 +54,9 @@ export default function SideNavigation() {
                 </li>
                 <li>
                   <Link href="/about">About</Link>
+                </li>
+                <li>
+                  <Link href="/trending">Trendy</Link>
                 </li>
                 <li>
                   <Link href="/login">Login</Link>

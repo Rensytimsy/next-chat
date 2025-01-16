@@ -6,14 +6,15 @@ const lora = Lora({subsets: ["latin"]})
 
 export default function NavigationBar() {
   return (
-    <div className={`hidden w-screen lg:flex md:hidden fixed top-0 flex flex-row justify-around ${lora.className} bg-headerBlue p-4`}>
+    <div className={`hidden w-screen lg:flex md:hidden fixed top-0 flex flex-row justify-around ${lora.className} bg-headerBlue p-4 z-50`}>
       <div className="text-2xl text-white font-semibold">
         <p>
-            <Link href="/">ChatSpace</Link></p>
+            <Link href="/">DevSpace</Link></p>
       </div>
       <ul className="flex flex-row gap-x-6 mt-2 text-white">
         <li className="hover:text-accentYellow"><Link href="/">Home</Link></li>
         <li className="hover:text-accentYellow"><Link href="/about">About</Link></li>
+        <li className="hover:text-accentYellow"><Link href="/trending">Trendy</Link></li>
         <li className="hover:text-accentYellow"><Link href="/login">Login</Link></li>
         <li className="hover:text-accentYellow"><Link href="/signup">Sign up</Link></li>
       </ul>
