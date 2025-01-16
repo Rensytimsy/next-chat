@@ -37,19 +37,33 @@ export async function POST(request: Request) {
   }
 }
 
+
+
 // The function below deletes user document using the id of the document  passed
 export async function DELETE(request: Request) {
   try {
     await dbConnection();
     //below code is to help with the setting of the request params
-    const reqbody = await request.json();
-    const name = reqbody.username;
-    const foundUser = await userSchema.findOneAndDelete({username: name});
-    return NextResponse.json({ user: foundUser, message: "user successfully deleted" }, { status: 200 });
+   const { searchParams } = new URL(request.url);
+   const userid: string = searchParams.get("userid") || "";
+
+   //Make sure that the user id is a valid one in mongodb
+   if(!Types.ObjectId.isValid(userid)){
+    return new NextResponse(JSON.stringify({message: "invalid user id, please provide a valid one"}), {status: 400});
+   }
+
+    const foundUser = await userSchema.findByIdAndDelete(userid);
+    //Below is the error that a user gets if no such user or user name in the database.
+    if(!foundUser){
+      return new NextResponse(JSON.stringify({message: "Invalid username or userid, please confirm the details you have provided."}), {status: 400})
+    }
+    return NextResponse.json({message: "user successfully deleted" }, { status: 200 });
   } catch (error: any) {
     return new NextResponse(error.message, { status: 500 });
   }
 }
+
+
 
 //Below is a function that is used to update a user document in the database
 export const PATCH = async (request: Request) => {
@@ -68,7 +82,7 @@ export const PATCH = async (request: Request) => {
       return new NextResponse(
         JSON.stringify({
           message:
-            "Username and userId  are required inorder to get that document from the database",
+            "User id and name are required!",
         }),
         { status: 404 }
       );
