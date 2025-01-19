@@ -1,4 +1,6 @@
 import Link from "next/link";
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 import { Lora } from 'next/font/google';
 
@@ -9,9 +11,15 @@ export default function NavigationBar() {
     <div className={`hidden w-screen lg:flex md:hidden fixed top-0 flex flex-row justify-around ${lora.className} bg-headerBlue p-4 z-50`}>
       <div className="text-2xl text-white font-semibold">
         <p>
-            <Link href="/">DevSpace</Link></p>
+            <Link href="/">DevSpace</Link>
+          </p>
       </div>
       <ul className="flex flex-row gap-x-6 mt-2 text-white">
+      <div>
+      <button>
+            <LightModeIcon />
+        </button>
+      </div>
         <li className="hover:text-accentYellow"><Link href="/">Home</Link></li>
         <li className="hover:text-accentYellow"><Link href="/about">About</Link></li>
         <li className="hover:text-accentYellow"><Link href="/trending">Trendy</Link></li>

@@ -44,7 +44,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       );
     }
   };
-
+    
 export const POST = async (request: Request) => {
     try{
         // Establishing database connection below
