@@ -23,7 +23,7 @@ export default function TrendyPage() {
     const getPosts = async () => {
       try {
         const response = await axios.get<{ foundPosts: Post[] }>(
-          "http://localhost:3000/api/socialpost?userId=6788d7a78dfbc4b76f7e763a"
+          "http://localhost:3000/api/socialpost?userId=6788c21b2a013e804a57bee0"
         );
         setPosts(response.data.foundPosts); // Accessing foundPosts from the response
       } catch (error) {

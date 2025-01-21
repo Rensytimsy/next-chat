@@ -23,7 +23,8 @@ export default {
         redColor: "#EF4444",
         lightBlue: "#93C5FD",
         purpleColor: "#8B5CF6",
-        headerBlue: "#002233"
+        headerBlue: "#002233",
+        floraWhite: "#FFFAF0"
       },
     },
   },

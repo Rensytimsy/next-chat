@@ -3,16 +3,20 @@
 import { Lora } from "next/font/google";
 const lora = Lora({ subsets: ["latin"] });
 import { usePathname } from "next/navigation";
+import { setTheme } from "../components/handletheme";
+import {use, useEffect, useState} from "react"
+import axios from 'axios';
 
 export default function AboutPage() {
 
   const path = usePathname();
+  const {theme, toggleTheme} = setTheme();
 
   return (
     <div
       className={`h-screen ${path === "/" ? "" : "mt-14"} w-screen bg-contain bg-center min-h-screen ${lora.className}`}
       style={{
-        backgroundImage: 'url("/about back.svg")', // Path to your SVG
+        backgroundImage: `url(${theme === "light" ? "/lightThemeBackground.svg" : "/background1.svg"})`, // Path to your SVG
         backgroundSize: "cover", // Ensures the SVG covers the entire div
         backgroundPosition: "center", // Centers the SVG
         backgroundRepeat: "no-repeat",

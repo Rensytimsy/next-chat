@@ -17,11 +17,11 @@ export default function SideNavigation() {
   const {theme, toggleTheme} = setTheme();
 
 
-  console.log(theme);
+  // console.log(theme);
 
   return (
     <div className={`${theme === "light" ? "bg-gray-30 w-screen z-50" : "bg-headerBlue w-screen z-50"}`}>
-      <div className={`${theme === "light" ? "p-4 lg:hidden md:block fixed top-0 flex flex-row justify-between w-screen bg-white z-50" : "p-4 lg:hidden md:block fixed top-0 flex flex-row justify-between w-screen bg-headerBlue z-50"}`}>
+      <div className={`${theme === "light" ? "p-4 lg:hidden md:block fixed top-0 flex flex-row justify-between w-screen bg-floraWhite z-50" : "p-4 lg:hidden md:block fixed top-0 flex flex-row justify-between w-screen bg-headerBlue z-50"}`}>
         <div className={`${lora.className}`}>
             <p className={`${theme === "light" ? "text-2xl font-semibold text-black" : "text-2xl font-semibold text-white" }`}>DevSpace</p>
         </div>
@@ -65,19 +65,24 @@ export default function SideNavigation() {
           <div>
             <div className="mt-[180px] flex justify-center">
               <ul className={`${theme === "light" ? "text-black text-center space-y-8" : "text-white text-center space-y-8" }`}>
-                <li>
+                <li
+                onClick={() => setOpenNav(false)}>
                   <Link href="/">Home</Link>
                 </li>
-                <li>
+                <li
+                onClick={() => setOpenNav(false)}>
                   <Link href="/about">About</Link>
                 </li>
-                <li>
+                <li
+                onClick={() => setOpenNav(false)}>
                   <Link href="/trending">Trendy</Link>
                 </li>
-                <li>
+                <li
+                onClick={() => setOpenNav(false)}>
                   <Link href="/login">Login</Link>
                 </li>
-                <li>
+                <li
+                onClick={() => setOpenNav(false)}>
                   <Link href="/signup">Sign up</Link>
                 </li>
               </ul>

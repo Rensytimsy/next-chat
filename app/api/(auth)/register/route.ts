@@ -2,19 +2,58 @@ import { NextResponse, NextRequest } from "next/server";
 import dbConnection from "@/lib/db";
 import userSchema from "@/lib/modals/user";
 import { json } from "stream/consumers";
+import {Types, ObjectId} from "mongoose";
 
-import mongoose, { Types, ObjectId } from "mongoose";
-
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(request: Request, res: NextResponse) {
   try {
-    // The code below ensures that we are connected to the database.
+    // Connect to the database
+    const { searchParams } = new URL(request.url);
+    const userId: string = searchParams.get("userId") || "";
     await dbConnection();
-    const foundUsers: any = await userSchema.find();
-    return NextResponse.json(foundUsers, { status: 200 });
+
+    let availableUser;
+
+    // If a valid userId is provided, search for the user by ID
+    if (userId && Types.ObjectId.isValid(userId)) {
+      const foundUser = await userSchema.findById({ _id: userId });
+      if (!foundUser) {
+        return new NextResponse(
+          JSON.stringify({ message: "User not found", success: false }),
+          { status: 404 }
+        );
+      }
+      availableUser = foundUser;
+    }
+
+    // If no userId is provided, fetch all users
+    if (!userId) {
+      const findAllUsers = await userSchema.find();
+      if (findAllUsers.length === 0) {
+        return new NextResponse(
+          JSON.stringify({ message: "No users found", success: false }),
+          { status: 404 }
+        );
+      }
+      availableUser = findAllUsers;
+      return new NextResponse(
+        JSON.stringify({ foundUsers: availableUser, success: true }),
+        { status: 200 }
+      );
+    }
+
+    // Respond with the found user(s)
+    return new NextResponse(
+      JSON.stringify({ Users: availableUser }),
+      { status: 200 }
+    );
   } catch (error: any) {
-    return new NextResponse(error.message);
+    return new NextResponse(
+      JSON.stringify({ message: error.message, success: false }),
+      { status: 500 }
+    );
   }
 }
+
 
 // Below we are creating or registering users
 export async function POST(request: Request) {

@@ -4,46 +4,28 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { Types, ObjectId } from "mongoose";
 
-
-export const GET = async (req: NextRequest, res: NextResponse) => {
-    try {
-      const { searchParams } = new URL(req.url);
-      const userId: string = searchParams.get('userId') || '';
-  
-      // Check if the passed user ID is valid
-      if (!Types.ObjectId.isValid(userId)) {
-        return new NextResponse(
-          JSON.stringify({ message: 'Invalid userId!' }),
-          { status: 400 }
-        );
-      }
-  
-      // Establish a connection to the database
-      await dbConnection();
-  
-      // Find posts associated with the userId
-      const availablePosts = await Post.find({ user: userId });
-  
-      // If no posts are found, notify the client
-      if (!availablePosts || availablePosts.length === 0) {
-        return new NextResponse(
-          JSON.stringify({ message: 'No posts found for this user' }),
-          { status: 404 }
-        );
-      }
-  
-      // Return the found posts
-      return new NextResponse(
-        JSON.stringify({ foundPosts: availablePosts }),
-        { status: 200 }
-      );
-    } catch (error: any) {
-      return new NextResponse(
-        JSON.stringify({ error: error.message || 'Server error' }),
-        { status: 500 }
-      );
+export const GET = async (request: Request) => {
+  try{
+    const {searchParams} = new URL(request.url);
+    const userId:string = searchParams.get("userId") || "";
+    //validating if the id passed for the user is a valid mongoose id
+    if(!userId || !Types.ObjectId.isValid(userId)){
+      return new NextResponse(JSON.stringify({message: "Invalid user id, user does not exist"}), {status: 400});
     }
-  };
+    //Connecting to the database 
+    await dbConnection();
+
+    const findUserRelatedPost = await Post.find({user: new Types.ObjectId(userId)});
+    if(!findUserRelatedPost || findUserRelatedPost.length === 0){
+      return new NextResponse(JSON.stringify({message: "No post found for this user!"}), {status: 400});
+    }
+
+    return new NextResponse(JSON.stringify({foundPosts: findUserRelatedPost}), {status: 200});
+  }catch(error:any){
+    return new NextResponse(JSON.stringify({Error: error}), {status: 500})
+  }
+}
+
     
 export const POST = async (request: Request) => {
     try{
