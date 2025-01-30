@@ -1,24 +1,37 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-    providers: [Credentials({
-        credentials: {},
-        async authorize(credentials,) {
-            let user = null;
+export const {handlers, auth, signIn, signOut} = NextAuth({
+    providers: [
+        Credentials({
+            credentials: {
+                username: {
+                    type: "string",
+                    placeholder: "username",label: "Username"
+                },
+                email: {
+                    type: "string", 
+                    placeholder: "Enter user email",
+                    label: "email"},
+                password: {
+                    type: "string",
+                    placeholder: "string",label: "password"
+                }
+            },
+            async authorize(credentials){
+                let user = null;
+                
                 user = {
-                    id: '1',
-                    name: 'Aditya Singh',
-                    email: 'jojo@jojo.com',
-                    role: "admin"
+                    name: "timo",
+                    email: "timo@examplemail.com",
+                    password: "1234"
+                }
+                if(credentials.username !== user.name || credentials.email !== user.email || credentials.password !== user.password){
+                    console.log("Invalid credentials passed");
                 }
 
-                if (!user) {
-                    console.log("Invalid credentials");
-                    return null;
-                }
-
-                return user;   
-        },
-    })]
-});
+                return user;
+            }
+        }), 
+    ]
+})
