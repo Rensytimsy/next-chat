@@ -1,14 +1,12 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { SignInSchema } from "./lib/zod";
+import { NextResponse } from "next/server";
 
 export const {handlers, auth, signIn, signOut} = NextAuth({
     providers: [
         Credentials({
             credentials: {
-                username: {
-                    type: "string",
-                    placeholder: "username",label: "Username"
-                },
                 email: {
                     type: "string", 
                     placeholder: "Enter user email",
@@ -20,18 +18,34 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
             },
             async authorize(credentials){
                 let user = null;
-                
-                user = {
-                    name: "timo",
-                    email: "timo@examplemail.com",
-                    password: "1234"
+                //passing credentials while signing up
+                const parsedCredentials = SignInSchema.safeParse(credentials);
+                if(!parsedCredentials.success){
+                    console.log("Invalid credentials", parsedCredentials.error.errors)
+                    return null
                 }
-                if(credentials.username !== user.name || credentials.email !== user.email || credentials.password !== user.password){
-                    console.log("Invalid credentials passed");
+
+                user = {
+                    email: "timo@examplemail.com",
+                    password: "123456789"
                 }
 
                 return user;
             }
         }), 
-    ]
+    ],
+    callbacks: {
+        authorized({request: { nextUrl },  auth}){
+            const isLoggedIn = !!auth?.user;
+            const {pathname} = nextUrl;
+            if(pathname.startsWith("/auth/signin") && isLoggedIn){
+                return  Response.redirect(new URL("/", nextUrl));
+            }
+
+            return !!auth;
+        }
+    },
+    pages: {
+        signIn: "/auth/signin"
+    }
 })

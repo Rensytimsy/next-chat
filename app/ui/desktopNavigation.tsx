@@ -5,6 +5,9 @@ import Link from "next/link";
 import { Lora } from "next/font/google";
 import { cn } from "@/lib/utils";
 import PersonIcon from "@mui/icons-material/Person";
+import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
+
 const loraFont = Lora({ subsets: ["latin"] });
 // import { Icons } from "@/components/icons"
 import {
@@ -16,6 +19,9 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { ClassNames } from "@emotion/react";
+import { SignOut } from "../actions/authActions";
+import { redirect } from "next/dist/server/api-utils";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -52,10 +58,14 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export function DesktopNavigationMenu() {
+
+  const {data: session} = useSession();
+  console.log(session);
+
   return (
-    <div className={`flex justify-around border p-4`}>
+    <div className={`flex justify-around p-4`}>
       <div className={`mt-2 ${loraFont.className}`}>
-        <h1 className="text-lg">Rent a Car</h1>
+        <h1 className="text-xl font-semibold"><Link href="/">Rent a Car</Link></h1>
       </div>
       <NavigationMenu>
         <NavigationMenuList>
@@ -135,15 +145,15 @@ export function DesktopNavigationMenu() {
         </NavigationMenuList>
       </NavigationMenu>
       <div className={`mt-1 ${loraFont.className}`}>
-        <div className="flex">
+        <div className="flex ">
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>
-                  <p className="text-sm mr-3">John Doe</p>
+                  <p className="text-sm mr-3">{session?.user ? session.user.name : ""}</p>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="w-[200px]">
+                  {session && <ul className="w-[200px]">
                     <ListItem href="/account" title="Account">
                       View Account
                     </ListItem>
@@ -153,12 +163,24 @@ export function DesktopNavigationMenu() {
                     <ListItem href="/logout" title="Logout">
                       Logout
                     </ListItem>
-                  </ul>
+                  </ul>}
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
           <PersonIcon className="bg-gray-200 rounded-full cursor-pointer mt-2" />
+          {session ?
+          (<Button variant={"default"} size={"sm"}
+          className="ml-[100px]"
+          onClick={SignOut}
+          >Sign Out</Button>) : (
+            <Link href="/auth/signin">
+            <Button variant={"default"} size={"sm"}
+              className="ml-[100px]"
+              >Sign in</Button>
+            </Link>
+          )
+          }
         </div>
       </div>
     </div>
