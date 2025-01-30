@@ -2,18 +2,14 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [count, setCount ] = useState([]);
   return (
     <>
-      hello this is the homepage
-      <div>
-        The start of something greate
+      <div className="mt-3">
       </div>
-      <p>
-
-      </p>
     </>
   );
 }
